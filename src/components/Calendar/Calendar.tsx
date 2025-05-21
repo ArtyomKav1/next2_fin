@@ -32,7 +32,7 @@ function Calendar() {
   const [errorFetch, setErrorFetch] = useState(false);
   const [curses, setCurses] = useState<CursesType[]>([]);
 
-  const [filtersDate, setFilterDate] = useState<string[]>([]);
+  // const [filtersDate, setFilterDate] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchCurses = async () => {

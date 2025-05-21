@@ -28,7 +28,6 @@ export function Nums(props: NumsProps) {
   const [monthsData, setMonthsData] = useState<MonthData[]>([]);
   const [isInitialized, setIsInitialized] = useState(false);
   const [isAddingMonth, setIsAddingMonth] = useState(false);
-  const [centerMonthIndex, setCenterMonthIndex] = useState<number>(1);
   const [events, setEvents] = useState<EventsType[]>([]);
   const today = new Date();
   const [isScrolling, setIsScrolling] = useState(false);
@@ -56,21 +55,21 @@ export function Nums(props: NumsProps) {
     fetchEvents();
   }, []);
 
-  // Центровка месяца при скролле
-  useEffect(() => {
-    const scrollContainer = scrollContainerRef.current;
-    if (!scrollContainer) return;
+  // вычисления центрального месяца
+  // useEffect(() => {
+  //   const scrollContainer = scrollContainerRef.current;
+  //   if (!scrollContainer) return;
 
-    const handleScroll = () => {
-      const scrollLeft = scrollContainer.scrollLeft;
-      const monthWidth = getMonthWidth();
-      const visibleIndex = Math.round(scrollLeft / (monthWidth + 20));
-      setCenterMonthIndex(visibleIndex);
-    };
+  //   const handleScroll = () => {
+  //     const scrollLeft = scrollContainer.scrollLeft;
+  //     const monthWidth = getMonthWidth();
+  //     const visibleIndex = Math.round(scrollLeft / (monthWidth + 20));
+  //     setCenterMonthIndex(visibleIndex);
+  //   };
 
-    scrollContainer.addEventListener("scroll", handleScroll);
-    return () => scrollContainer.removeEventListener("scroll", handleScroll);
-  }, [monthsData]);
+  //   scrollContainer.addEventListener("scroll", handleScroll);
+  //   return () => scrollContainer.removeEventListener("scroll", handleScroll);
+  // }, [monthsData]);
 
   // Начальная генерация месяцев
   useEffect(() => {
@@ -182,13 +181,8 @@ export function Nums(props: NumsProps) {
       rightObserver.disconnect();
     };
   }, [monthsData, isInitialized, isAddingMonth]);
-  //МЕСЯЦ СБОКУ
-  const currentMonth = monthsData[centerMonthIndex]?.[0]
-    ? months[monthsData[centerMonthIndex][0][1]]
-    : months[1];
-
   return (
-    <div className="flex flex-col gap-[24px] overflow-hidden">
+    <div className="flex flex-col gap-[24px] overflow-x-auto">
       <div className="h-[60px] flex items-center justify-center relative">
         <div
           className="w-[30px] h-[50px] rotate-180 flex items-center justify-center flex-shrink-0 pr-[5px] max-sm:hidden"
@@ -196,13 +190,6 @@ export function Nums(props: NumsProps) {
         >
           <Image width={15} height={15} src={arrow} alt="" />
         </div>
-
-        <div className="w-[30px] h-[60px] flex items-center justify-center shrink-0">
-          <div className="w-[40px] h-[25px] border-b-2 border-black rotate-[270deg] flex items-center justify-center font-semibold">
-            {currentMonth}
-          </div>
-        </div>
-
         <div
           ref={scrollContainerRef}
           className="overflow-y-hidden flex w-[90%] max-sm:w-screen scrollbar-hide "
@@ -216,7 +203,7 @@ export function Nums(props: NumsProps) {
                     className="w-[45px] h-[40px] bg-slate-400 flex-shrink-0"
                   />
                 )}
-                <div className="sticky w-[40px] h-[25px] border-b-[2px] border-black rotate-[270deg] flex items-center justify-center mt-[10px]">
+                <div className="sticky left-[-20px] z-50 bg-[#f4f4f4] w-[60px] h-[25px] border-b-[2px] border-black rotate-[270deg] flex items-center justify-center mt-[10px]">
                   {months[month[0][1]]}
                 </div>
                 <div className="flex gap-[10px] month-container">

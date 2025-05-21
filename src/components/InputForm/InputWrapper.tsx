@@ -51,7 +51,7 @@ export const InputForm = () => {
 
   return (
     <>
-      <div className=" md:px-[48px] p-[20px] py-[88px] max-md:py-[20px] ">
+      <div id="InputForm" className=" md:px-[48px] p-[20px] py-[88px] max-md:py-[20px] ">
         <div className="  md:p-[40px] p-[20px]  bg-gradient-to-t from-[#5F01D6] from-34% to-[#a245f9] to-94% rounded-[32px] max-sm:rounded-[20px] relative">
           {errorFetch && (
             <div className="absolute top-[-40px] left-0 w-full flex items-center justify-center">
